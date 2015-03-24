@@ -21,7 +21,7 @@ angular
             .primaryPalette('green')
             .accentPalette('red');
 
-    }).controller("portalController",['$scope','$http', '$log','ApplicationTitle',function($scope,$http, $log,ApplicationTitle){
+    }).controller("portalController",['$scope','$http','ApplicationTitle', '$mdSidenav', '$mdBottomSheet', '$log', '$q',function($scope,$http,ApplicationTitle, $mdSidenav, $mdBottomSheet, $log, $q){
         $scope.Application = ApplicationTitle;
         $scope.tabs = [
             { title: 'Dashboard',leftNav: "src/Dashboard/view/navigation-bar.html",dataDiv:"src/Dashboard/view/data-container.html"},
@@ -31,6 +31,12 @@ angular
         ];
 
         $scope.toggleRight = function(){
+
+                var pending = $mdBottomSheet.hide() || $q.when(true);
+
+                pending.then(function(){
+                    $mdSidenav('right').toggle();
+                });
 
         }
 
