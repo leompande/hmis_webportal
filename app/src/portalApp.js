@@ -4,7 +4,7 @@
 
 
 angular
-    .module('portalApp', ['ngMaterial','Dashboard', 'coverages','Analysis','Download'])
+    .module('portalApp', ['ngMaterial','Dashboard', 'coverages','Analysis','Download','highcharts-ng','ui.bootstrap'])
     .constant("ApplicationTitle","HMIS - Web Portal")
     .config(function($mdThemingProvider, $mdIconProvider){
 

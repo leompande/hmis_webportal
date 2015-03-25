@@ -1,6 +1,73 @@
+<script>
+    $("ul#jqueryTabs li:first a").trigger("click");
+</script>
 <div layout="row" ng-controller="DashboardController">
 <div flex="95">
+<div flex="100">
+            <div layout="row" class="thumbnail">
+                <div  class="dashboard">
+                    <ul id="jqueryTabs">
+                        <li><a href="#/Dashboard/Population" ng-click="currentDashTab='tab-1'">Population</a></li>
+                        <li><a href="#/Dashboard/HealthFacilities" ng-click="currentDashTab='tab-2'">Health Facilities</a></li>
+                        <li><a href="#/Dashboard/MorbidityMortality" ng-click="currentDashTab='tab-3'">Morbidity & Mortality</a></li>
+                        <li><a href="#/Dashboard/HumanResources" ng-click="currentDashTab='tab-4'">Human Resources</a></li>
+                    </ul>
 
+                    <div>
+                        <div id="tabs-1" ng-show="currentDashTab=='tab-1'">
+
+
+
+                                    <section layout="row" layout-sm="column" layout-align="center center" style="margin-top: 10px;">
+                                        <md-button class="md-raised md-default-theme " ng-model="snippets[0].highchartsNG.options.chart.type" title="Open as Column Chart">Column</md-button>&nbsp;&nbsp;
+                                        <md-button class="md-raised md-default-theme " ng-model="snippets[0].highchartsNG.options.chart.type" title="Open as Line Chart">Line</md-button>&nbsp;&nbsp;
+                                        <md-button class="md-raised md-default-theme " ng-model="snippets[0].highchartsNG.options.chart.type" title="Open as Area Chart">Area</md-button>&nbsp;&nbsp;
+                                        <md-button class="md-raised md-default-theme " ng-model="snippets[0].highchartsNG.options.chart.type" title="Open as Spline Chart">Spline</md-button>&nbsp;&nbsp;
+                                        <md-button class="md-raised md-default-theme " ng-model="snippets[0].highchartsNG.options.chart.type" title="Open as Spline Area Chart">Spline Area</md-button>&nbsp;&nbsp;
+                                        <md-button class="md-raised md-default-theme " ng-model="snippets[0].highchartsNG.options.chart.type" title="Open  Map">Map</md-button>&nbsp;&nbsp;
+                                        <md-button class="md-raised md-default-theme " ng-model="snippets[0].highchartsNG.options.chart.type" title="Open as Pie Chart">Pie</md-button>
+                                    </section>
+
+                            <div layout="row" style="margin-top: 30px;">
+                                <highchart layout="row" style="min-height:600px;" id="snippets[0].placeHolder" config="snippets[0].highchartsNG"></highchart>
+                            </div>
+
+                            <div layout="row" style="margin-top:10px;">
+                                <div >
+                                    <a href="#" class="thumbnail">
+                                        <img  src="https://dhis.moh.go.tz/api/maps/gOn5n9yYWsM/data">
+                                    </a>
+                                </div>
+                                <div >
+                                    <a href="#" class="thumbnail">
+                                        <img  src="https://dhis.moh.go.tz/api/maps/q0TlgcU9dT3/data">
+                                    </a>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div id="tabs-2" ng-show="currentDashTab=='tab-2'">
+                            <div class="row">
+                                <div class="col-xs-12 col-md-12 " style="width:100%;" ng-include="'partials/ownershipDistribution.html'">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12 col-md-12 " style="width:100%;" ng-include="'partials/typeDistribution.html'">
+                                </div>
+                            </div>
+                        </div>
+                        <div id="tabs-3" ng-show="currentDashTab=='tab-3'">
+                        </div>
+                        <div id="tabs-4" ng-show="currentDashTab=='tab-4'">
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+</div>
+<div layout="row">
+
+</div>
 </div>
 <div flex ng-if="tab.title=='Dashboard'">
     <md-button ng-click="toggleRight()"
