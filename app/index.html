@@ -16,7 +16,11 @@
     <link rel="stylesheet" href="assets/css/jquery.dataTables.css"/>
     <link rel="stylesheet" href="assets/css/jquery-ui.css"/>
     <link rel="stylesheet" href="assets/css/style.css"/>
-    <!--<link rel="stylesheet" href="assets/css/"/>-->
+    <link rel="stylesheet" href="assets/css/style.css"/>
+    <link rel="stylesheet" href="assets/css/bootstrap.css"/>
+    <link rel="stylesheet" href="assets/css/style.css"/>
+    <link rel="stylesheet" href="assets/webfont/style.css"/>
+    <link rel="stylesheet" href="assets/webfont/webfont.css"/>
 
 </head>
 
@@ -27,41 +31,20 @@
 </md-toolbar>
 
 <div flex layout="row" >
-        <md-tabs class="md-primary" md-selected="selectedIndex" flex >
+        <md-tabs style="width:100%" class="md-primary" md-selected="selectedIndex" flex >
             <md-tab ng-repeat="tab in tabs"
                     ng-disabled="tab.disabled"
                     label="{{tab.title}}">
                 <md-content  class="md-padding" style="min-height:550px;">
                     <ng-include src="tab.dataDiv"></ng-include>
                 </md-content>
-                <md-sidenav ng-if="tab.title=='Dashboard'" class="md-sidenav-right md-whiteframe-z2" md-component-id="right"  >
-                    <md-content class="md-padding" >
-                        <ng-include src="tab.rightNav"></ng-include>
-                    </md-content>
+                <md-sidenav  class="md-sidenav-right md-whiteframe-z2" md-component-id="right"  >                <md-content class="md-padding" >
+                     <ng-include src="tab.rightNav"></ng-include>
+                </md-content>
                 </md-sidenav>
             </md-tab>
         </md-tabs>
 </div>
-
-
-<script src='js/angular.js'></script>
-<script src='js/angular-animate.min.js'></script>
-<script src='js/angular-aria.min.js'></script>
-<script src='js/angular-messages.min.js'></script>
-<script src='js/angular-route.min.js'></script>
-<script src='js/ui-bootstrap-tpls-0.12.0.min.js'></script>
-<script src='js/jquery.js'></script>
-<script src='js/highcharts.js'></script>
-<script src='js/highcharts-more.js'></script>
-<script src='js/highcharts-ng.js'></script>
-<script src="js/data.js"></script>
-<script src="js/jquery.highchartTable-min.js"></script>
-<script src="js/exporting.js"></script>
-<!--<script src='js/docs-demo-scripts.js'></script>-->
-<script src='js/docs.js'></script>
-
-
-
 
 
 <script src="./bower_components/angular/angular.js"></script>

@@ -21,29 +21,12 @@
 
 
         var self = this;
-        self.dashboardOrgUnits = [];
+        self.dashboardOrgUnits = null;
         self.dashboardDatasets = [];
         self.dashboardOrgUnits = [];
         self.dashboardPeriods  = [];
 
-        self.loadOrgUnits = function(){
 
-            var   url = "src/data/organisationUnits.json";
-
-            $http({
-                method:"GET",
-                url: url,
-                headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-            }).success(function(response) {
-                self.dashboardOrgUnits.push(response.organisationUnits);
-            }).
-                error(function(response) {
-
-                });
-            return false;
-
-        }
-        self.loadOrgUnits();
 
 
 
