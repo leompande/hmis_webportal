@@ -34,11 +34,12 @@
         <md-tabs style="width:100%" class="md-primary" md-selected="selectedIndex" flex >
             <md-tab ng-repeat="tab in tabs"
                     ng-disabled="tab.disabled"
-                    label="{{tab.title}}">
+                    label="{{tab.title}}" href="#/">
                 <md-content  class="md-padding" style="min-height:550px;">
                     <ng-include src="tab.dataDiv"></ng-include>
                 </md-content>
-                <md-sidenav  class="md-sidenav-right md-whiteframe-z2" md-component-id="right"  >                <md-content class="md-padding" >
+                <md-sidenav  class="md-sidenav-right md-whiteframe-z2" md-component-id="right"  >
+                    <md-content class="md-padding" >
                      <ng-include src="tab.rightNav"></ng-include>
                 </md-content>
                 </md-sidenav>

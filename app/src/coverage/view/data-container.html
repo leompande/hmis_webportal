@@ -12,11 +12,9 @@
 
                     <div>
                         <div id="tab1"  ng-show="currentCoverageTab=='tab-1'" >
-                            {{ "HMIS" }}
                             <ng-include src="'src/coverage/view/hmis.html'"></ng-include>
                         </div>
                         <div id="tab2"  ng-show="currentCoverageTab=='tab-2'" >
-                            {{ "HIV/AIDS" }}
                             <ng-include src="'src/coverage/view/hivaids.html'"></ng-include>
                         </div>
                         <div id="tab3"  ng-show="currentCoverageTab=='tab-3'" >
@@ -34,14 +32,5 @@
         <div layout="row">
 
         </div>
-    </div>
-    <div flex ng-if="tab.title=='Downloads'">
-        <md-button ng-click="toggleRight()"
-                   class="md-primary">
-            <md-icon md-svg-icon="menu" ></md-icon>
-            <md-tooltip>
-                Graph Options
-            </md-tooltip>
-        </md-button>
     </div>
 </div>

@@ -1,25 +1,30 @@
-<md-sidenav class="md-sidenav-left md-whiteframe-z2" md-component-id="left" md-is-open>
-
-    <md-content class="md-padding md-default-theme" flex role="navigation" >
-        <!--<div class="bottom-sheet-demo inset" layout="column" layout-sm="row" layout-align="left">-->
-            <!--<md-button class="md-primary" flex="" layout="row" aria-expanded="true" >-->
-                <!--Population-->
-            <!--</md-button>-->
-
-            <!--<md-button class="md-primary" flex="" layout="row" aria-expanded="true" >-->
-                <!--Health facilities-->
-            <!--</md-button>-->
-
-            <!--<md-button class="md-primary" flex="" layout="row" aria-expanded="true" >-->
-                <!--Human Resources-->
-            <!--</md-button>-->
+<div ng-controller="CoverageController" layout="column" layout-align="center center" style="min-height: 300px;">
 
 
-            <!--<md-button class="md-primary" flex="" layout="row" aria-expanded="true" >-->
-                <!--District Health Profile-->
-            <!--</md-button>-->
+    <md-content  class="md-padding" >
 
+        <div layout="column" flex="100">
+            <label>Period</label>
+            <md-select placeholder="Select Period" ng-model="period">
+                <md-option value="2010">2010</md-option>
+                <md-option value="2011">2011</md-option>
+                <md-option value="2012">2012</md-option>
+                <md-option value="2013">2013</md-option>
+                <md-option value="2014">2014</md-option>
+                <md-option value="2015">2015</md-option>
+            </md-select>
+        </div>
+        </br>
+        </br>
+        </br>
+        <div layout="column" flex="100">
+            <label>Organisation Unit</label>
+            <md-select placeholder="Select Regions" data-multiple="true" ng-model="orgUnit">
+                <md-option  disabled value="All">All Rgeions</md-option>
+                <md-option ng-repeat="org in dashboardOrgunits" value="{{org.id}}">{{org.name}}</md-option>
 
-        <!--</div>-->
+            </md-select>
+        </div>
+
     </md-content>
-</md-sidenav>
+</div>

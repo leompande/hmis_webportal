@@ -26,7 +26,7 @@ angular
         $scope.tabs = [
             { title: 'Dashboard',rightNav: "src/Dashboard/view/navigation-bar.html",dataDiv:"src/Dashboard/view/data-container.html"},
             { title: 'Data Coverage',rightNav: "src/coverage/view/navigation-bar.html",dataDiv:"src/coverage/view/data-container.html"},
-            { title: 'Analysis',rightNav: "src/analysis/view/navigation-bar.html",dataDiv:"src/Dashboard/view/data-container.html"},
+            { title: 'Analysis',rightNav: "src/analysis/view/navigation-bar.html",dataDiv:"src/analysis/view/data-container.html"},
             { title: 'Downloads',rightNav: "src/downloads/view/navigation-bar.html",dataDiv:"src/downloads/view/data-container.html"}
         ];
 

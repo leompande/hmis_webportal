@@ -1,39 +1,72 @@
-<md-content  class="md-padding" style="min-height:650px;" ng-conroller="AnalysisController">
+<md-content  class="md-padding" style="min-height:650px;" ng-controller="AnalysisController">
+    <div layout="row"  layout-align="center center">
+        <p style="text-decoration: underline;">HIMS Web Portal Data Analysis</p>
+    </div>
     <!--<div layout="row" layout-fill >-->
 
-        Analysis
-
-        <!--<div layout="row" layout-margin >-->
-            <!--<div flex="2" flex-order="1">-->
-                <!--<label>Facility Type</label></br>-->
-                <!--<md-select placeholder="Select Facility" multiple ng-model="healthFacility">-->
-                    <!--<md-option value="1">All</md-option>-->
-                    <!--<md-option value="2" >Faith Based Facility</md-option>-->
-                    <!--<md-option value="3" >Parastatal</md-option>-->
-                    <!--<md-option value="4" >Private</md-option>-->
-                <!--</md-select>-->
+        <!--Analysis Under Construction-->
+    <!--<div  layout="column" layout-margin style="padding:25px;">-->
+        <!--<div class="progress">-->
+            <!--<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100" style="width: 30%;">-->
+                <!--30% Complete-->
             <!--</div>-->
-            <!--<div flex="2" flex-order="2">-->
-                <!--<label>Organisation Unit</label></br>-->
-                <!--<md-select placeholder="Pick" ng-model="someVal">-->
-                    <!--<md-option value="1">One</md-option>-->
-                    <!--<md-option value="2" ng-selected="selected" ng-disabled="disabled">Two</md-option>-->
-                <!--</md-select>-->
-            <!--</div>-->
-            <!--<div flex="2" flex-order="3">-->
-
-                <!--<md-select placeholder="Pick" ng-model="someVal">-->
-                    <!--<md-option value="1">One</md-option>-->
-                    <!--<md-option value="2" ng-selected="selected" ng-disabled="disabled">Two</md-option>-->
-                <!--</md-select>-->
-            <!--</div>-->
-            <!--<div flex="2" flex-order="4">-->
-
-                <!--<md-select placeholder="Pick" ng-model="someVal">-->
-                    <!--<md-option value="1">One</md-option>-->
-                    <!--<md-option value="2" ng-selected="selected" ng-disabled="disabled">Two</md-option>-->
-                <!--</md-select>-->
-            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
+        <div layout="row" layout-margin >
+            <div flex="2" flex-order="1">
+                <label>Data Group</label></br>
+                <md-select placeholder="Select Facility"  ng-model="dataGroup" ng-change="modalChange()">
+                    <md-option value="District Populations" >District Populations</md-option>
+                    <md-option value="Regional Populations" >Regional Populations</md-option>
+                    <md-option value="Health Facility" >Health Facility</md-option>
+                    <md-option value="Morbidity & Mortality" >Morbidity & Mortality</md-option>
+                    <md-option value="Data Reporting Rate of HMIS Forms By Ownership for Tanzania" >Data Reporting Rate of HMIS Forms By Ownership for Tanzania </md-option>
+                    <md-option value="Data Reporting Rate of HMIS Forms For Regions" >Data Reporting Rate of HMIS Forms For Regions</md-option>
+                    <md-option value="Data Reporting Rate of HMIS Forms By Type for Tanzania" >Data Reporting Rate of HMIS Forms By Type for Tanzania</md-option>
+                    <md-option value="OPD and IPD" >Reporting Rate OPD and IPD</md-option>
+                    <md-option value="ANC and L&D" >Reporting Rate ANC and L&D</md-option>
+                    <md-option value="PNC and Family Planning" >Reporting Rate of PNC and Family Planning</md-option>
+                    <md-option value="Drugs and Child Health" >Reporting Rate of Drugs and Child Health</md-option>
+                    <md-option value="HMIS Forms By Type" >Reporting Rate of HMIS Forms By Type</md-option>
+                    <md-option value="HMIS Forms By Ownership" >Reporting Rate of HMIS Forms By Ownership</md-option>
+                    <md-option value="NACP Forms" >Reporting Rate of NACP Forms</md-option>
+                    <md-option value="NACP HIV Care and Treatment" >Reporting Rate of NACP HIV Care and Treatment</md-option>
+                    <md-option value="NACP Home based Care (HUWANYU)" >Reporting Rate of NACP Home based Care (HUWANYU)</md-option>
+                    <md-option value="NACP HIV Testing and Councelling (HTC)" >Reporting Rate of NACP HIV Testing and Councelling (HTC)</md-option>
+                    <md-option value="NACP Sexually Transmitted Infections (STI)" >NACP Sexually Transmitted Infections (STI)</md-option>
+                    <md-option value="NMCP Forms">Reporting Rate of NMCP Forms</md-option>
+                    <md-option value="NMCP National Malaria Control Programme">Reporting Rate of NMCP National Malaria Control Programme</md-option>
+                    <md-option value="Wagonjwa wa Nje (OPD)">Reporting Rate of Wagonjwa wa Nje (OPD)</md-option>
+                    <md-option value="NTLP">Reporting Rate of NTLP</md-option>
+                    <md-option value="MB Leprosy patients treatment outcome">Reporting Rate of MB Leprosy patients treatment outcome</md-option>
+                    <md-option value="PB Leprosy patients treatment outcome">Reporting Rate of PB Leprosy patients treatment outcome</md-option>
+                </md-select>
+            </div>
+            <div flex="2" flex-order="2">
+                <label>Organisation Unit</label></br>
+                <md-select placeholder="Select Regions" data-multiple="true" ng-model="orgUnit" ng-change="modalChange()">
+                    <md-option   value="All Regions">All Regions</md-option>
+                    <md-option ng-repeat="org in analysisOrgunits " value="{{org.id}}">{{org.name}}</md-option>
+                </md-select>
+            </div>
+            <div flex="2" flex-order="3">
+                <label>Period</label></br>
+                    <md-select placeholder="Select Period" ng-model="period">
+                        <md-option value="2010">2010</md-option>
+                        <md-option value="2011">2011</md-option>
+                        <md-option value="2012">2012</md-option>
+                        <md-option value="2013">2013</md-option>
+                        <md-option value="2014">2014</md-option>
+                        <md-option value="2015">2015</md-option>
+                    </md-select>
+            </div>
+            <div flex="2" flex-order="4">
+                <label>Category</label></br>
+                <md-select placeholder="Category" ng-model="category" ng-change="modalChange()">
+                    <md-option value="orgUnit">Organisation Units</md-option>
+                    <md-option value="period">Period</md-option>
+                </md-select>
+            </div>
             <!--<div flex="2" flex-order="5">-->
 
                 <!--<md-select placeholder="Pick" ng-model="someVal">-->
@@ -42,6 +75,24 @@
                 <!--</md-select>-->
             <!--</div>-->
 
-        <!--</div>-->
+        </div>
+    <!--layout="row" layout-margin-->
+        <div  >
+            <section layout="row" layout-sm="column" layout-align="space-around center" style="margin-top: 10px;">
+                <md-button class="md-raised md-default-theme " ng-model="snippets[snippetIndex].highchartsNG.options.chart.type" btn-radio="'table'" uncheckable title="Open as Column Chart"><i data-icon="&#xe028;" class="icon"></i>&nbsp;Table</md-button>&nbsp;&nbsp;
+                <md-button class="md-raised md-default-theme " ng-model="snippets[snippetIndex].highchartsNG.options.chart.type" btn-radio="'column'" uncheckable title="Open as Column Chart"><i data-icon="&#xe028;" class="icon"></i>&nbsp;Column</md-button>&nbsp;&nbsp;
+                <md-button class="md-raised md-default-theme " ng-model="snippets[snippetIndex].highchartsNG.options.chart.type" btn-radio="'line'" uncheckable title="Open as Line Chart"><i data-icon="&#xe026;" class="icon"></i>&nbsp;Line</md-button>&nbsp;&nbsp;
+                <md-button class="md-raised md-default-theme " ng-model="snippets[snippetIndex].highchartsNG.options.chart.type" btn-radio="'area'" title="Open as Area Chart"><i data-icon="&#xe000;" class="icon"></i>&nbsp;Area</md-button>&nbsp;&nbsp;
+                <md-button class="md-raised md-default-theme " ng-model="snippets[snippetIndex].highchartsNG.options.chart.type" btn-radio="'spline'" title="Open as Spline Chart"><i data-icon="&#xe000;" class="icon"></i>&nbsp;Spline</md-button>&nbsp;&nbsp;
+                <md-button class="md-raised md-default-theme " ng-model="snippets[snippetIndex].highchartsNG.options.chart.type" btn-radio="'areaspline'" title="Open as Spline Area Chart"><i data-icon="&#xe014;" class="icon"></i>&nbsp;Spline Area</md-button>&nbsp;&nbsp;
+                <md-button class="md-raised md-default-theme " ng-model="snippets[snippetIndex].highchartsNG.options.chart.type" btn-radio="'pie'" title="Open  Map"><i  class="icon icon-graph-pie"></i>&nbsp;Pie</md-button>&nbsp;&nbsp;
+                <md-button class="md-raised md-default-theme " ng-model="snippets[snippetIndex].highchartsNG.options.chart.type" btn-radio="'map'" title="Open as Pie Chart"><i data-icon="&#xe024;" class="icon"></i>&nbsp;Map</md-button>&nbsp;&nbsp;
+            </section>
+        </div>
+        <div>
+            <section layout="row" layout-sm="column" layout-align="center center" style="margin-top: 10px;">
+                <highchart flex="100" style="min-height:600px;" id="snippets[snippetIndex].placeHolder" config="snippets[snippetIndex].highchartsNG"></highchart>
+            </section>
+        </div>
 
 </md-content>

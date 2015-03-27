@@ -8,10 +8,26 @@
         .controller('CoverageController', [
             'coverageService','$scope' ,'$http', '$timeout', '$mdSidenav', '$mdBottomSheet', '$log', '$q',
             CoverageController
+        ])
+        .controller('HmisController', [
+            'coverageService','$scope' ,'$http', '$timeout', '$mdSidenav', '$mdBottomSheet', '$log', '$q',
+            HmisController
+        ])
+        .controller('HIVController', [
+            'coverageService','$scope' ,'$http', '$timeout', '$mdSidenav', '$mdBottomSheet', '$log', '$q',
+            HIVController
+        ])
+        .controller('MaraliaController', [
+            'coverageService','$scope' ,'$http', '$timeout', '$mdSidenav', '$mdBottomSheet', '$log', '$q',
+            MaraliaController
+        ])
+        .controller('TBController', [
+            'coverageService','$scope' ,'$http', '$timeout', '$mdSidenav', '$mdBottomSheet', '$log', '$q',
+            TBController
         ]);
 
     /**
-     * Main Controller for the Angular Material Starter App
+     * Coverage Controller for the Angular Material Starter App
      * @param $scope
      * @param $mdSidenav
      * @param avatarsService
@@ -746,8 +762,8 @@
                         });
                         snippet.highchartsNG.series.push(serie);
                         if(snippetIndex==2) {
-                            console.log(snippet.name);
-                            console.log(snippet.highchartsNG);
+                            //console.log(snippet.name);
+                            //console.log(snippet.highchartsNG);
                         }
                     });
                     //Add pie chart plot options
@@ -865,27 +881,35 @@
         }
         $scope.loadOrgUnits();
         if(!angular.isUndefined($scope.coverageOrgunits) ){
-            console.log($scope.coverageOrgunits);
+            //console.log($scope.coverageOrgunits);
         }
 
 
-        $scope.toggleLeft = function() {
-            $mdSidenav('left').toggle()
-                .then(function(){
-                    $log.debug("toggle left is done");
-                });
-        };
+        $scope.toggleRight = function(){
+            $log.debug("close rti is done");
+            var pending = $mdBottomSheet.hide() || $q.when(true);
 
-        $scope.close = function() {
-            $mdSidenav('left').close()
-                .then(function(){
-                    $log.debug("close LEFT is done");
-                });
-        };
+            pending.then(function(){
+                $mdSidenav('right').toggle();
 
+            });
 
-    
+        }
+
 
     }
+    function HmisController( CoverageService,$scope,$http,  $timeout, $mdSidenav, $mdBottomSheet, $log, $q){
+
+    }
+    function HIVController( CoverageService,$scope,$http,  $timeout, $mdSidenav, $mdBottomSheet, $log, $q){
+
+    }
+    function MaraliaController( CoverageService,$scope,$http,  $timeout, $mdSidenav, $mdBottomSheet, $log, $q){
+
+    }
+    function TBController( CoverageService,$scope,$http,  $timeout, $mdSidenav, $mdBottomSheet, $log, $q){
+
+    }
+
 
 })();

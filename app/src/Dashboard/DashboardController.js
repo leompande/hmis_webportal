@@ -746,8 +746,8 @@
                         });
                         snippet.highchartsNG.series.push(serie);
                         if(snippetIndex==2) {
-                            console.log(snippet.name);
-                            console.log(snippet.highchartsNG);
+                            //console.log(snippet.name);
+                            //console.log(snippet.highchartsNG);
                         }
                     });
                     //Add pie chart plot options
@@ -865,7 +865,7 @@
         }
         $scope.loadOrgUnits();
         if(!angular.isUndefined($scope.dashboardOrgunits) ){
-            console.log($scope.dashboardOrgunits);
+            //console.log($scope.dashboardOrgunits);
         }
     }
 })();
