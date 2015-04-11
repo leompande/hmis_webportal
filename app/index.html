@@ -21,6 +21,8 @@
     <link rel="stylesheet" href="assets/css/style.css"/>
     <link rel="stylesheet" href="assets/webfont/style.css"/>
     <link rel="stylesheet" href="assets/webfont/webfont.css"/>
+    <link rel="stylesheet" href="assets/openlayermaps/ol.css"/>
+    <link rel="stylesheet" href="assets/openlayermaps/angular-openlayers-directive.css"/>
 
 </head>
 
@@ -30,12 +32,12 @@
     <h1>{{ Application }}</h1>
 </md-toolbar>
 
-<div flex layout="row" >
+<div flex >
         <md-tabs style="width:100%" class="md-primary" md-selected="selectedIndex" flex >
             <md-tab ng-repeat="tab in tabs"
                     ng-disabled="tab.disabled"
-                    label="{{tab.title}}" href="#/">
-                <md-content  class="md-padding" style="min-height:550px;">
+                    label="{{tab.title}}" href="#/" >
+                <md-content  class="md-padding" style="min-height:550px;" >
                     <ng-include src="tab.dataDiv"></ng-include>
                 </md-content>
                 <md-sidenav  class="md-sidenav-right md-whiteframe-z2" md-component-id="right"  >
@@ -51,6 +53,7 @@
 <script src="./bower_components/angular/angular.js"></script>
 <script src="./bower_components/angular-animate/angular-animate.js"></script>
 <script src="./bower_components/angular-aria/angular-aria.js"></script>
+<script src="./bower_components/angular/angular-sanitize.js"></script>
 <script type="text/javascript" src="./bower_components/angular-material/angular-material.js"></script>
 
 
@@ -64,6 +67,8 @@
 <script src="./assets/js/highcharts.js"></script>
 <script src="./assets/js/highcharts-more.js"></script>
 <script src="./assets/js/highcharts-ng.js"></script>
+<script src="./assets/openlayermaps/ol.js"></script>
+<script src="./assets/openlayermaps/angular-openlayers-directive.js"></script>
 
 
 <script src="./src/Dashboard/Dashboard.js"></script>

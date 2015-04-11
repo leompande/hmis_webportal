@@ -15,7 +15,7 @@
         <div layout="row" layout-margin >
             <div flex="2" flex-order="1">
                 <label>Data Group</label></br>
-                <md-select placeholder="Select Facility"  ng-model="dataGroup" ng-change="modalChange()">
+                <md-select placeholder="Select Facility"  ng-model="dataGroup" >
                     <md-option value="District Populations" >District Populations</md-option>
                     <md-option value="Regional Populations" >Regional Populations</md-option>
                     <md-option value="Health Facility" >Health Facility</md-option>
@@ -51,7 +51,7 @@
             </div>
             <div flex="2" flex-order="3">
                 <label>Period</label></br>
-                    <md-select placeholder="Select Period" ng-model="period">
+                    <md-select placeholder="Select Period" ng-model="period" ng-change="modalChange()">
                         <md-option value="2010">2010</md-option>
                         <md-option value="2011">2011</md-option>
                         <md-option value="2012">2012</md-option>
@@ -60,13 +60,7 @@
                         <md-option value="2015">2015</md-option>
                     </md-select>
             </div>
-            <div flex="2" flex-order="4">
-                <label>Category</label></br>
-                <md-select placeholder="Category" ng-model="category" ng-change="modalChange()">
-                    <md-option value="orgUnit">Organisation Units</md-option>
-                    <md-option value="period">Period</md-option>
-                </md-select>
-            </div>
+
             <!--<div flex="2" flex-order="5">-->
 
                 <!--<md-select placeholder="Pick" ng-model="someVal">-->
@@ -79,20 +73,35 @@
     <!--layout="row" layout-margin-->
         <div  >
             <section layout="row" layout-sm="column" layout-align="space-around center" style="margin-top: 10px;">
-                <md-button class="md-raised md-default-theme " ng-model="snippets[snippetIndex].highchartsNG.options.chart.type" btn-radio="'table'" uncheckable title="Open as Column Chart"><i data-icon="&#xe028;" class="icon"></i>&nbsp;Table</md-button>&nbsp;&nbsp;
-                <md-button class="md-raised md-default-theme " ng-model="snippets[snippetIndex].highchartsNG.options.chart.type" btn-radio="'column'" uncheckable title="Open as Column Chart"><i data-icon="&#xe028;" class="icon"></i>&nbsp;Column</md-button>&nbsp;&nbsp;
-                <md-button class="md-raised md-default-theme " ng-model="snippets[snippetIndex].highchartsNG.options.chart.type" btn-radio="'line'" uncheckable title="Open as Line Chart"><i data-icon="&#xe026;" class="icon"></i>&nbsp;Line</md-button>&nbsp;&nbsp;
-                <md-button class="md-raised md-default-theme " ng-model="snippets[snippetIndex].highchartsNG.options.chart.type" btn-radio="'area'" title="Open as Area Chart"><i data-icon="&#xe000;" class="icon"></i>&nbsp;Area</md-button>&nbsp;&nbsp;
-                <md-button class="md-raised md-default-theme " ng-model="snippets[snippetIndex].highchartsNG.options.chart.type" btn-radio="'spline'" title="Open as Spline Chart"><i data-icon="&#xe000;" class="icon"></i>&nbsp;Spline</md-button>&nbsp;&nbsp;
-                <md-button class="md-raised md-default-theme " ng-model="snippets[snippetIndex].highchartsNG.options.chart.type" btn-radio="'areaspline'" title="Open as Spline Area Chart"><i data-icon="&#xe014;" class="icon"></i>&nbsp;Spline Area</md-button>&nbsp;&nbsp;
-                <md-button class="md-raised md-default-theme " ng-model="snippets[snippetIndex].highchartsNG.options.chart.type" btn-radio="'pie'" title="Open  Map"><i  class="icon icon-graph-pie"></i>&nbsp;Pie</md-button>&nbsp;&nbsp;
-                <md-button class="md-raised md-default-theme " ng-model="snippets[snippetIndex].highchartsNG.options.chart.type" btn-radio="'map'" title="Open as Pie Chart"><i data-icon="&#xe024;" class="icon"></i>&nbsp;Map</md-button>&nbsp;&nbsp;
+                <md-button class="md-raised md-default-theme "   ng-click="showTable()" uncheckable title="Open as Column Table"><i style="color: #005fb3" data-icon="&#xe028;" class="icon"></i>&nbsp;Table</md-button>&nbsp;&nbsp;
+                <md-button class="md-raised md-default-theme " ng-model="snippets[snippetIndex].highchartsNG.options.chart.type" btn-radio="'column'" ng-click="showChart()" uncheckable title="Open as Column Chart"><i style="color: #005fb3" data-icon="&#xe028;" class="icon"></i>&nbsp;Column</md-button>&nbsp;&nbsp;
+                <md-button class="md-raised md-default-theme " ng-model="snippets[snippetIndex].highchartsNG.options.chart.type" btn-radio="'line'"  uncheckable title="Open as Line Chart"><i style="color: #005fb3" data-icon="&#xe026;" class="icon"></i>&nbsp;Line</md-button>&nbsp;&nbsp;
+                <md-button class="md-raised md-default-theme " ng-model="snippets[snippetIndex].highchartsNG.options.chart.type" btn-radio="'area'"  title="Open as Area Chart"><i style="color: #005fb3" data-icon="&#xe000;" class="icon"></i>&nbsp;Area</md-button>&nbsp;&nbsp;
+                <md-button class="md-raised md-default-theme " ng-model="snippets[snippetIndex].highchartsNG.options.chart.type" btn-radio="'spline'"  title="Open as Spline Chart"><i style="color: #005fb3" data-icon="&#xe000;" class="icon"></i>&nbsp;Spline</md-button>&nbsp;&nbsp;
+                <md-button class="md-raised md-default-theme " ng-model="snippets[snippetIndex].highchartsNG.options.chart.type" btn-radio="'areaspline'"  title="Open as Spline Area Chart"><i style="color: #005fb3" data-icon="&#xe014;" class="icon"></i>&nbsp;Spline Area</md-button>&nbsp;&nbsp;
+                <md-button class="md-raised md-default-theme " ng-model="snippets[snippetIndex].highchartsNG.options.chart.type" btn-radio="'pie'"  title="Open  Map"><i style="color: #005fb3"  class="icon icon-graph-pie"></i>&nbsp;Pie</md-button>&nbsp;&nbsp;
+                <md-button class="md-raised md-default-theme " ng-click="showMap()" uncheckable title="Open as Map"><i style="color: #005fb3" data-icon="&#xe024;" class="icon"></i>&nbsp;Map</md-button>&nbsp;&nbsp;
             </section>
         </div>
         <div>
-            <section layout="row" layout-sm="column" layout-align="center center" style="margin-top: 10px;">
+            <section ng-if="chart" layout="row" layout-sm="column" layout-align="center center" style="margin-top: 10px;">
                 <highchart flex="100" style="min-height:600px;" id="snippets[snippetIndex].placeHolder" config="snippets[snippetIndex].highchartsNG"></highchart>
             </section>
+            <section ng-if="table"  layout-sm="column" layout-align="space-around start" style="margin-top: 10px;">
+            </section>
+            <section ng-if="map"  layout="row" layout-align="space-around start" style="margin-top: 10px;" >
+                <div flex="75">
+                    <openlayers ol-center="tanzania" height="500px">
+                        <ol-layer ol-layer-properties="layer" ng-repeat="layer in geojson"></ol-layer>
+                    </openlayers>
+                    <pre ng-bind="layers | json"></pre>
+                </div>
+                <div flex="25">some controls</div>
+
+            </section>
+
+
+
         </div>
 
 </md-content>

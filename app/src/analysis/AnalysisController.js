@@ -6,7 +6,7 @@
     angular
         .module('Analysis')
         .controller('AnalysisController', [
-            'AnalysisService','$scope' ,'$http','$timeout', '$mdSidenav', '$mdBottomSheet', '$log', '$q',
+            'AnalysisService','$scope' ,'$http','olData','$timeout', '$mdSidenav', '$mdBottomSheet', '$log', '$q',
             AnalysisController
         ]);
 
@@ -17,8 +17,33 @@
      * @param avatarsService
      * @constructor
      */
-    function AnalysisController( AnalysisService,$scope,$http, $timeout, $mdSidenav, $mdBottomSheet, $log, $q) {
+    function AnalysisController( AnalysisService,$scope,$http,olData, $timeout, $mdSidenav, $mdBottomSheet, $log, $q) {
+
         var self = this;
+        $scope.latitude      = -6.4;
+        $scope.longitude     = 37;
+        $scope.zooming       = 6;
+        $scope.geoJson       = [];
+        self.defaultOrg      = [ {
+            name: 'Tanzania',
+            source: {
+                type: 'GeoJSON',
+                url: 'http://localhost/OpenLayerApp/json/tanzania.json'
+            },
+            style: {
+                fill: {
+                    color: 'rgba(0, 255, 0, 0.6)'
+                },
+                stroke: {
+                    color: 'white',
+                    width: 3
+                }
+            }
+        }];
+        $scope.organisationUnit = self.defaultOrg;
+
+
+
         $scope.analysisOrgunits = [
             {
                 "id": "YtVMnut7Foe",
@@ -148,9 +173,12 @@
         ];
         // selection modals
         $scope.dataGroup = "District Populations";
-        $scope.period = "2014";
-        $scope.orgUnit = "All Regions";
-        $scope.category = "period";
+        $scope.period    = "2014";
+        $scope.orgUnit   = "All Regions";
+        $scope.category  = "period";
+        $scope.table     = null;
+        $scope.chart     = null;
+        $scope.map       = null;
 
         $scope.snippets = [
             //{
@@ -171,7 +199,7 @@
             //    placeHolder:"chartx"
             //},
             {
-                name:"Regional Populations For Year 2014",
+                name:"Regional Populations ",
                 url:"src/data/regionPopulation.json",
                 html:"",
                 layout: {
@@ -189,7 +217,7 @@
                 placeHolder:"populationChart"
             },
             {
-                name:"District Populations For Year 2014",
+                name:"District Populations ",
                 url:"src/data/districtPopulation.json",
                 html:"",
                 layout: {
@@ -207,7 +235,7 @@
                 placeHolder:"populationChart"
             },
             {
-                name:"Data Reporting Rate of HMIS Forms For Regions in 2014",
+                name:"Data Reporting Rate of HMIS Forms For Regions ",
                 url:"src/data/allHMISCompletenesss.json",
                 html:"",
                 layout: {
@@ -233,7 +261,7 @@
                 placeHolder:"populationChart"
             },
             {
-                name:"Data Reporting Rate of OPD and IPD For Regions in 2014",
+                name:"Data Reporting Rate of OPD and IPD For Regions ",
                 url:"src/data/OpdIpdCompleteness.json",
                 html:"",
                 layout: {
@@ -252,7 +280,7 @@
                 placeHolder:"populationChart"
             },
             {
-                name:"Data Reporting Rate of ANC and L&D For Regions in 2014",
+                name:"Data Reporting Rate of ANC and L&D For Regions ",
                 url:"src/data/AncLandDCompleteness.json",
                 html:"",
                 layout: {
@@ -271,7 +299,7 @@
                 placeHolder:"populationChart"
             },
             {
-                name:"Data Reporting Rate of PNC and Family Planning For Regions in 2014",
+                name:"Data Reporting Rate of PNC and Family Planning For Regions ",
                 url:"src/data/PncAndFPCompleteness.json",
                 html:"",
                 layout: {
@@ -290,7 +318,7 @@
                 placeHolder:"populationChart"
             },
             {
-                name:"Data Reporting Rate of Tracer Drugs and Child Health For Regions in 2014",
+                name:"Data Reporting Rate of Tracer Drugs and Child Health For Regions ",
                 url:"src/data/tracerAndChildHealthCompleteness.json",
                 html:"",
                 layout: {
@@ -309,7 +337,7 @@
                 placeHolder:"populationChart"
             },
             {
-                name:"Data Reporting Rate of HMIS Forms By Ownership for Tanzania in 2014",
+                name:"Data Reporting Rate of HMIS Forms By Ownership for Tanzania ",
                 url:"src/data/completenessByOwnership.json",
                 html:"",
                 layout: {
@@ -335,7 +363,7 @@
                 placeHolder:"populationChart"
             },
             {
-                name:"Data Reporting Rate of HMIS Forms By Type for Tanzania in 2014",
+                name:"Data Reporting Rate of HMIS Forms By Type for Tanzania ",
                 url:"src/data/completenessByType.json",
                 html:"",
                 layout: {
@@ -361,7 +389,7 @@
                 placeHolder:"populationChart"
             },
             {
-                name:"Data Reporting Rate of NACP Forms For Regions in 2014",
+                name:"Data Reporting Rate of NACP Forms For Regions ",
                 url:"src/data/allNACPCompleteness.json",
                 html:"",
                 layout: {
@@ -383,7 +411,7 @@
                 placeHolder:"populationChart"
             },
             {
-                name:"Data Reporting Rate of NACP HIV Care and Treatment for Regions in 2014",
+                name:"Data Reporting Rate of NACP HIV Care and Treatment for Regions ",
                 url:"src/data/allNACPCompleteness.json",
                 html:"",
                 layout: {
@@ -401,7 +429,7 @@
                 placeHolder:"populationChart"
             },
             {
-                name:"Data Reporting Rate of NACP Home based Care(HUWANYU) For Regions in 2014",
+                name:"Data Reporting Rate of NACP Home based Care(HUWANYU) For Regions ",
                 url:"src/data/allNACPCompleteness.json",
                 html:"",
                 layout: {
@@ -419,7 +447,7 @@
                 placeHolder:"populationChart"
             },
             {
-                name:"Data Reporting Rate of NACP HIV Testing and Counselling (HTC) For Regions in 2014",
+                name:"Data Reporting Rate of NACP HIV Testing and Counselling (HTC) For Regions ",
                 url:"src/data/allNACPCompleteness.json",
                 html:"",
                 layout: {
@@ -437,7 +465,7 @@
                 placeHolder:"populationChart"
             },
             {
-                name:"Data Reporting Rate of NACP_Sexually Transmitted Infections (STI) For Regions in 2014",
+                name:"Data Reporting Rate of NACP_Sexually Transmitted Infections (STI) For Regions ",
                 url:"src/data/allNACPCompleteness.json",
                 html:"",
                 layout: {
@@ -455,7 +483,7 @@
                 placeHolder:"populationChart"
             },
             {
-                name:"Data Reporting Rate of NMCP Forms For Regions in 2014",
+                name:"Data Reporting Rate of NMCP Forms For Regions ",
                 url:"src/data/allNMCPCompleteness.json",
                 html:"",
                 layout: {
@@ -475,7 +503,7 @@
                 placeHolder:"populationChart"
             },
             {
-                name:"Data Reporting Rate of NMCP_National Malaria Control Programme For Regions in 2014",
+                name:"Data Reporting Rate of NMCP_National Malaria Control Programme For Regions ",
                 url:"src/data/allNMCPCompleteness.json",
                 html:"",
                 layout: {
@@ -493,7 +521,7 @@
                 placeHolder:"populationChart"
             },
             {
-                name:"Data Reporting Rate of Wagonjwa wa Nje (OPD) For Regions in 2014",
+                name:"Data Reporting Rate of Wagonjwa wa Nje (OPD) For Regions ",
                 url:"src/data/allNMCPCompleteness.json",
                 html:"",
                 layout: {
@@ -511,7 +539,7 @@
                 placeHolder:"populationChart"
             },
             {
-                name:"Data Reporting Rate of NTLP Form For Regions in 2014",
+                name:"Data Reporting Rate of NTLP Form For Regions ",
                 url:"src/data/allNTLPCompleteness.json",
                 html:"",
                 layout: {
@@ -536,7 +564,7 @@
                 placeHolder:"populationChart"
             },
             {
-                name:"Data Reporting Rate of NTLP_LEP09 a) PB Leprosy patients Treatment outcome For Regions in 2014",
+                name:"Data Reporting Rate of NTLP_LEP09 a) PB Leprosy patients Treatment outcome For Regions ",
                 url:"src/data/allNTLPCompleteness.json",
                 html:"",
                 layout: {
@@ -554,7 +582,7 @@
                 placeHolder:"populationChart"
             },
             {
-                name:"Data Reporting Rate of NTLP_LEP09 b) MB Leprosy patients treatment outcome For Regions in 2014",
+                name:"Data Reporting Rate of NTLP_LEP09 b) MB Leprosy patients treatment outcome For Regions ",
                 url:"src/data/allNTLPCompleteness.json",
                 html:"",
                 layout: {
@@ -572,7 +600,7 @@
                 placeHolder:"populationChart"
             },
             {
-                name:"Data Reporting Rate of NTLP_LEP09 c) Outcome of standard treatment for reaction For Regions in 2014",
+                name:"Data Reporting Rate of NTLP_LEP09 c) Outcome of standard treatment for reaction For Regions ",
                 url:"src/data/allNTLPCompleteness.json",
                 html:"",
                 layout: {
@@ -590,7 +618,7 @@
                 placeHolder:"populationChart"
             },
             {
-                name:"Data Reporting Rate of NTLP_LEP08 Leprosy Drugs Order Calculation Form For Regions 2014",
+                name:"Data Reporting Rate of NTLP_LEP08 Leprosy Drugs Order Calculation Form For Regions ",
                 url:"src/data/allNTLPCompleteness.json",
                 html:"",
                 layout: {
@@ -608,7 +636,7 @@
                 placeHolder:"populationChart"
             },
             {
-                name:"Data Reporting Rate of NTLP_LEP07 case notification report of leprosy For Regions in 2014",
+                name:"Data Reporting Rate of NTLP_LEP07 case notification report of leprosy For Regions ",
                 url:"src/data/allNTLPCompleteness.json",
                 html:"",
                 layout: {
@@ -626,7 +654,7 @@
                 placeHolder:"populationChart"
             },
             {
-                name:"Data Reporting Rate of NTLP_LEP10 Annual_Report on Prevention of Disability For Regions in 2014",
+                name:"Data Reporting Rate of NTLP_LEP10 Annual_Report on Prevention of Disability For Regions ",
                 url:"src/data/allNTLPCompleteness.json",
                 html:"",
                 layout: {
@@ -644,7 +672,7 @@
                 placeHolder:"populationChart"
             },
             {
-                name:"Data Reporting Rate of NTLP_TB08 Drugs and Lab Supplies Order Calculation Form For Regions in 2014",
+                name:"Data Reporting Rate of NTLP_TB08 Drugs and Lab Supplies Order Calculation Form For Regions ",
                 url:"src/data/allNTLPCompleteness.json",
                 html:"",
                 layout: {
@@ -662,7 +690,7 @@
                 placeHolder:"populationChart"
             },
             {
-                name:"Data Reporting Rate of NTLP_TB07_Tuberculosis and TB/HIV For Regions in 2014",
+                name:"Data Reporting Rate of NTLP_TB07_Tuberculosis and TB/HIV For Regions ",
                 url:"src/data/allNTLPCompleteness.json",
                 html:"",
                 layout: {
@@ -688,7 +716,14 @@
                     $scope.snippetIndex = snippetIndex;
                     if(!angular.isUndefined(snippet.url) && snippet.url.length>0) {
                         //Fetch data from url
+                        var tableObject = {};
                         $http.get(snippet.url).success(function(data){
+                                tableObject.orgunits = data.metaData.ou;
+                                tableObject.names = data.metaData.names;
+                                tableObject.rows = data.rows;
+
+                            if(data.metaData.pe[0]===$scope.period){
+
                             //Initiate higchart for snippet
                             snippet.highchartsNG = {};
                             //snippet.highchartsNG.legend = {enabled:true};
@@ -698,6 +733,7 @@
                                 snippet.highchartsNG.options={};
                                 snippet.highchartsNG.options[snippet.object] = {};
                                 if(!angular.isUndefined(snippet.type)) {
+
                                     snippet.highchartsNG.options[snippet.object].type=snippet.type;
                                     snippet.highchartsNG.options[snippet.object].renderTo=snippet.placeHolder;
                                 }else {
@@ -750,8 +786,7 @@
                                 });
                                 snippet.highchartsNG.series.push(serie);
                                 if(snippetIndex==2) {
-                                    //console.log(snippet.name);
-                                    //console.log(snippet.highchartsNG);
+
                                 }
                             });
                             //Add pie chart plot options
@@ -805,13 +840,21 @@
                             snippet.highchartsNG.legend = {align:"left",verticalAlign:"top",float:true, enabled:true};
                             //Set title of the snippet
                             if(!angular.isUndefined(snippet.name)) {
-                                console.log(" I REAACH HERE");
-                                snippet.highchartsNG.title={text:snippet.name};
+
+                                snippet.highchartsNG.title={text:snippet.name+' '+$scope.period};
                             }else if(!angular.isUndefined(snippet.type) && !angular.isUndefined(snippet.object) ) {
-                                snippet.highchartsNG.title={text:snippet.type+' '+snippet.object};;
+                                snippet.highchartsNG.title={text:snippet.name+' '+$scope.period};
                             }
 
-                        }).error(function(data){
+                        }else{
+                                snippet.highchartsNG.title={text:snippet.name+' '+$scope.period};
+                                snippet.highchartsNG.series = [];
+                                snippet.highchartsNG.yAxis = [];
+                                snippet.highchartsNG.xAxis = {labels:{rotation:-45}};
+                                snippet.highchartsNG.xAxis.categories=[];
+                            }
+                        }
+                        ).error(function(data){
                             console.log('Data fetching failed');
                         })
                     }
@@ -819,7 +862,126 @@
 
             });
         }
+        self.drawTable = function(){
+            angular.forEach($scope.snippets,function(snippet,snippetIndex){
 
+                if(snippet.name.indexOf($scope.dataGroup)>=0){
+                    $scope.snippetIndex = snippetIndex;
+                    if(!angular.isUndefined(snippet.url) && snippet.url.length>0) {
+                        //Fetch data from url
+                        var tableObject = {};
+                        $http.get(snippet.url).success(function(data){
+
+                                tableObject.orgunits = data.metaData.ou;
+                                tableObject.names = data.metaData.names;
+                                tableObject.rows = data.rows;
+                                var table = "<div layout='row'>";
+                                    table += "<p>";
+                                    table += $scope.dataGroup+" : "+$scope.period;
+                                    table += "</p>";
+                                    table += "</div>";
+                                    table += "<div layout='row'>";
+                                    table += "<table class='table table-condensed table-responsive table-bordered table-striped'>";
+                                    table += "<thead>";
+                                    table += "<th>";
+                                    table += "Organisation Unit";
+                                    table += "</th>";
+                                    table += "<th>";
+                                    table += "";
+                                    table += "</th>";
+                                    table += "</thead>";
+                                    table += "<tbody>";
+                            angular.forEach(tableObject.orgunits,function(orgunit,orgunitIndex){
+                                table += "<tr>";
+                                    angular.forEach(tableObject.rows,function(row,rowIndex){
+                                        if(row[1]==orgunit && !angular.isArray($scope.orgUnit) && $scope.orgUnit=="All Regions"){
+                                            table += "<td>";
+                                            table += tableObject.names[orgunit];
+                                            table += "</td>";
+                                            table += "<td>";
+                                            table += row[2];
+                                            table += "</td>";
+                                            //console.log("ID: "+orgunit+ ", Name: "+tableObject.names[orgunit]+ " Rate: "+row[2]);
+                                        }
+                                        if(row[1]==orgunit && angular.isArray($scope.orgUnit) && $scope.orgUnit.indexOf(orgunit)>=0){
+                                            table += "<td>";
+                                            table += tableObject.names[orgunit];
+                                            table += "</td>";
+                                            table += "<td>";
+                                            table += row[2];
+                                            table += "</td>";
+                                            //console.log("ID: "+orgunit+ ", Name: "+tableObject.names[orgunit]+ " Rate: "+row[2]);
+                                        }
+                                    });
+                                table += "</tr>";
+                                 });
+                                table += "</tbody>";
+                                table += "</table>";
+                                table += "</div>";
+
+
+                                $("section[ng-if='table']").html(table);
+                            }
+                        ).error(function(data){
+                                console.log('Data fetching failed');
+                            })
+                    }
+                }
+
+            });
+        }
+        self.drawMap = function(){
+            if(angular.isArray($scope.orgUnit)){
+                self.newOrgObject = [];
+                if($scope.orgUnit.length!==0&&$scope.orgUnit.length!==25){
+
+                    angular.forEach($scope.orgUnit,function(selectedOrgs){
+
+                        angular.forEach($scope.analysisOrgunits,function(orgs){
+                            if(selectedOrgs==orgs.id){
+
+                                self.newOrgObject.push({name:orgs.name,uid:orgs.id,source:{type:'GeoJSON',url:self.getUrl(orgs.id)},style:{fill:{color:self.randomColor()},stroke:{color:'white',width:3}}});
+                            }
+
+                        });
+                    });
+                    if($scope.orgUnit.length===1){
+                        $scope.zooming = 8;
+                        $scope.latitude = -2.3437;
+                        $scope.longitude = 36.4172;
+                        self.latitude($scope.orgUnit[0]);
+
+                    }else{
+                        $scope.zooming = 6;
+                        $scope.zooming =6;
+                        $scope.latitude = -6.4;
+                        $scope.longitude = 37;
+                    }
+
+                    $scope.organisationUnit = self.newOrgObject;
+
+                }else{
+                    $scope.zooming =6;
+                    $scope.latitude = -6.4;
+                    $scope.longitude = 37;
+                    $scope.organisationUnit = self.defaultOrg;
+                }
+            }else{
+                $scope.zooming =6;
+                $scope.latitude = -6.4;
+                $scope.longitude = 37;
+                $scope.organisationUnit = self.defaultOrg;
+            }
+
+            angular.extend($scope, {
+                tanzania: {
+                    lat: $scope.latitude,
+                    lon: $scope.longitude,
+                    zoom:$scope.zooming
+                },
+                geojson: $scope.organisationUnit
+            });
+        }
 
         $scope.isChartObject = function(snippet) {
             return angular.isUndefined(snippet.object) ? false : true;
@@ -839,6 +1001,24 @@
         $scope.$watch('selectedIndex', function(current, old){
             if ( old && (old != current)) $log.debug('Goodbye ' + tabs[old].title + '!');
             if ( current )                $log.debug('Hello ' + tabs[current].title + '!');
+        });
+        $scope.$watch('dataGroup', function(current, old){
+            $scope.chart = null;
+            self.drawTable();
+        });
+        $scope.$watch('orgUnit', function(current, old){
+            //$scope.orgUnit = "All Regions";
+            $scope.orgUnit = self.checkIfAll($scope.orgUnit);
+            //$scope.orgUnit = current;
+            if($scope.chart!==null){
+                self.drawChart();
+            }
+            if($scope.table!==null){
+                self.drawTable();
+            }
+            if($scope.map!==null){
+                self.drawMap();
+            }
         });
 
         $scope.addTab = function (title, view) {
@@ -874,28 +1054,75 @@
 
         }
         $scope.loadOrgUnits();
-        if(!angular.isUndefined($scope.dashboardOrgunits) ){
-            //console.log($scope.dashboardOrgunits);
-        }
 
-        $scope.modalChange = function(){
+        $scope.showTable = function(){
+            $scope.table = "table";
+            $scope.chart = null;
+            $scope.map   = null;
+            self.drawTable();
+        }
+        $scope.showChart = function(){
+            $scope.chart = "chart";
+            $scope.table = null;
+            $scope.map   = null;
             self.drawChart();
-            console.log("Data Group: "+$scope.dataGroup);
         }
+        $scope.showMap = function(){
+            $scope.map = "map";
+            $scope.chart = null;
+            $scope.table = null;
 
-        $scope.modalChange();
+            //self.drawMap();
+        }
+        $scope.modalChange = function(){
+
+                self.drawChart();
+
+        }
+        $scope.showMap();
+        self.drawMap();
+
+        //$scope.modalChange();
         $scope.toggleAnalysis = function() {
             $mdSidenav('leftAnalysis').toggle()
                 .then(function(){
                     $log.debug("toggle left is done");
                 });
         };
+
         $scope.close = function() {
             $mdSidenav('leftAnalysis').close()
                 .then(function(){
                     $log.debug("close LEFT is done");
                 });
         };
+        self.randomColor = function()
+        {
+            var r = function () { return Math.floor(Math.random()*256) };
+            return "rgba(" + r() + "," + r() + ",0,0.6)";
+        }
+        self.latitude = function(uid){
+            angular.forEach(self.newOrgObject,function(selectedOrgs){
+                if(selectedOrgs.uid === uid){
+                    console.log(selectedOrgs);
+                }
+            });
+        }
+        self.longitude = function(uid){
+
+        }
+        self.getUrl = function(uid){
+            return "http://localhost/OpenLayerApp/json/"+uid+".json";
+        }
+        self.checkIfAll = function(arr){
+
+            if(arr.indexOf("All Regions")>=0){
+                arr = null;
+                arr = "All Regions";
+            }else{}
+
+            return arr;
+        }
     }
 
 })();

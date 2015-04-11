@@ -4,7 +4,7 @@
 
 
 angular
-    .module('portalApp', ['ngMaterial','Dashboard', 'coverages','Analysis','Download','highcharts-ng','ui.bootstrap'])
+    .module('portalApp', ['ngMaterial','Dashboard', 'coverages','Analysis','Download','highcharts-ng','ui.bootstrap','openlayers-directive'])
     .constant("ApplicationTitle","HMIS - Web Portal")
     .config(function($mdThemingProvider, $mdIconProvider){
 
@@ -18,7 +18,7 @@ angular
             .icon("phone"      , "./assets/svg/phone.svg"       , 512);
 
         $mdThemingProvider.theme('default')
-            .primaryPalette('green')
+            .primaryPalette('blue')
             .accentPalette('red');
 
     }).controller("portalController",['$scope','$http','ApplicationTitle', '$mdSidenav', '$mdBottomSheet', '$log', '$q',function($scope,$http,ApplicationTitle, $mdSidenav, $mdBottomSheet, $log, $q){
@@ -39,6 +39,7 @@ angular
                 });
 
         }
+
 
     }]);
 
